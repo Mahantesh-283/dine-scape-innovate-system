@@ -6,6 +6,8 @@ import { AmbientControls } from '../components/AmbientControls';
 import { OrderTracker } from '../components/OrderTracker';
 import { VRExperience } from '../components/VRExperience';
 import { PaymentSection } from '../components/PaymentSection';
+import { MusicPlayer } from '../components/MusicPlayer';
+import { Menu, Lightbulb, Headset, ShoppingCart, CreditCard, Music } from 'lucide-react';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('menu');
@@ -13,11 +15,12 @@ const Index = () => {
   const [ambientTheme, setAmbientTheme] = useState('default');
 
   const navigationSections = [
-    { id: 'menu', label: 'Menu', icon: '🍽️' },
-    { id: 'ambiance', label: 'Ambiance', icon: '🎨' },
-    { id: 'entertainment', label: 'VR & Entertainment', icon: '🥽' },
-    { id: 'orders', label: 'My Orders', icon: '📋' },
-    { id: 'payment', label: 'Payment', icon: '💳' },
+    { id: 'menu', label: 'Menu', icon: Menu },
+    { id: 'ambiance', label: 'Ambiance', icon: Lightbulb },
+    { id: 'entertainment', label: 'VR & Entertainment', icon: Headset },
+    { id: 'music', label: 'Music', icon: Music },
+    { id: 'orders', label: 'My Orders', icon: ShoppingCart },
+    { id: 'payment', label: 'Payment', icon: CreditCard },
   ];
 
   const addToOrder = (item) => {
@@ -43,20 +46,23 @@ const Index = () => {
         {/* Navigation */}
         <div className="flex justify-center py-6">
           <div className="flex space-x-2 bg-black/30 backdrop-blur-lg rounded-2xl p-2 border border-cyan-500/20">
-            {navigationSections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-xl transition-all duration-300 ${
-                  activeSection === section.id
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <span className="text-lg">{section.icon}</span>
-                <span className="font-medium">{section.label}</span>
-              </button>
-            ))}
+            {navigationSections.map((section) => {
+              const IconComponent = section.icon;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => setActiveSection(section.id)}
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl transition-all duration-300 ${
+                    activeSection === section.id
+                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <IconComponent className="w-5 h-5" />
+                  <span className="font-medium">{section.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -73,6 +79,9 @@ const Index = () => {
           )}
           {activeSection === 'entertainment' && (
             <VRExperience />
+          )}
+          {activeSection === 'music' && (
+            <MusicPlayer />
           )}
           {activeSection === 'orders' && (
             <OrderTracker orders={currentOrders} setOrders={setCurrentOrders} />

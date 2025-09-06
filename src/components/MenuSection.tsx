@@ -32,6 +32,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
   ];
 
   const menuItems: MenuItem[] = [
+    // Popular Items
     {
       id: 1,
       name: 'Quantum Fusion Curry',
@@ -57,6 +58,97 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
     },
     {
       id: 3,
+      name: 'Neural Network Pizza',
+      description: 'Self-assembling pizza with AI-selected toppings based on your biometric data',
+      price: 1599,
+      category: 'popular',
+      image: '🍕',
+      rating: 4.9,
+      prepTime: 20,
+      spiceLevel: 2,
+      isPopular: true
+    },
+    {
+      id: 4,
+      name: 'Levitating Burger',
+      description: 'Magnetic suspension system keeps ingredients floating until first bite',
+      price: 1299,
+      category: 'popular',
+      image: '🍔',
+      rating: 4.7,
+      prepTime: 16,
+      isPopular: true
+    },
+
+    // Appetizers
+    {
+      id: 5,
+      name: 'Nano Samosas',
+      description: 'Microscopic samosas that expand to full size when they hit your tongue',
+      price: 599,
+      category: 'appetizers',
+      image: '🥟',
+      rating: 4.6,
+      prepTime: 8,
+      spiceLevel: 2
+    },
+    {
+      id: 6,
+      name: 'Hologram Spring Rolls',
+      description: 'Translucent rice paper with AR-projected filling visualization',
+      price: 699,
+      category: 'appetizers',
+      image: '🥢',
+      rating: 4.5,
+      prepTime: 10,
+      spiceLevel: 1
+    },
+    {
+      id: 7,
+      name: 'Molecular Soup Spheres',
+      description: 'Liquid soup encased in edible membranes that burst with flavor',
+      price: 799,
+      category: 'appetizers',
+      image: '🍲',
+      rating: 4.8,
+      prepTime: 12,
+      spiceLevel: 3
+    },
+    {
+      id: 8,
+      name: 'Quantum Bread Sticks',
+      description: 'Breadsticks that exist in multiple dimensions simultaneously',
+      price: 399,
+      category: 'appetizers',
+      image: '🥖',
+      rating: 4.4,
+      prepTime: 6
+    },
+    {
+      id: 9,
+      name: 'Levitating Mozzarella',
+      description: 'Anti-gravity cheese sticks with marinara dipping portal',
+      price: 899,
+      category: 'appetizers',
+      image: '🧀',
+      rating: 4.7,
+      prepTime: 9
+    },
+    {
+      id: 10,
+      name: 'Digital Dumplings',
+      description: 'Steam dumplings with QR code patterns that tell their origin story',
+      price: 649,
+      category: 'appetizers',
+      image: '🥟',
+      rating: 4.6,
+      prepTime: 11,
+      spiceLevel: 2
+    },
+
+    // Main Course
+    {
+      id: 11,
       name: 'Neural Network Noodles',
       description: 'Smart pasta that adapts flavor profile based on your taste preferences',
       price: 899,
@@ -67,7 +159,84 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
       spiceLevel: 2
     },
     {
-      id: 4,
+      id: 12,
+      name: 'Time-Warp Biryani',
+      description: 'Biryani cooked using temporal acceleration chambers for perfect aging',
+      price: 1199,
+      category: 'mains',
+      image: '🍚',
+      rating: 4.9,
+      prepTime: 5,
+      spiceLevel: 4
+    },
+    {
+      id: 13,
+      name: 'Plasma-Grilled Steak',
+      description: 'Premium beef seared with controlled plasma for perfect molecular structure',
+      price: 2199,
+      category: 'mains',
+      image: '🥩',
+      rating: 4.8,
+      prepTime: 22
+    },
+    {
+      id: 14,
+      name: 'Quantum Entangled Tacos',
+      description: 'Twin tacos that share the same flavor - eat one, taste both',
+      price: 1099,
+      category: 'mains',
+      image: '🌮',
+      rating: 4.6,
+      prepTime: 14,
+      spiceLevel: 3
+    },
+    {
+      id: 15,
+      name: 'Holographic Fish Curry',
+      description: 'Sustainable lab-grown fish in traditional spices with AR garnish',
+      price: 1399,
+      category: 'mains',
+      image: '🐟',
+      rating: 4.5,
+      prepTime: 18,
+      spiceLevel: 4
+    },
+    {
+      id: 16,
+      name: 'Metamorphic Mushroom Risotto',
+      description: 'Shape-shifting mushrooms that change flavor as you eat',
+      price: 1149,
+      category: 'mains',
+      image: '🍄',
+      rating: 4.7,
+      prepTime: 20,
+      isVegetarian: true
+    },
+    {
+      id: 17,
+      name: 'Cyber Chicken Tikka',
+      description: 'Precision-cooked chicken with nano-spice injection system',
+      price: 1299,
+      category: 'mains',
+      image: '🍗',
+      rating: 4.8,
+      prepTime: 16,
+      spiceLevel: 3
+    },
+    {
+      id: 18,
+      name: 'Infinite Loop Lasagna',
+      description: 'Self-regenerating layers that appear as you eat the previous ones',
+      price: 1449,
+      category: 'mains',
+      image: '🍝',
+      rating: 4.6,
+      prepTime: 25
+    },
+
+    // Desserts
+    {
+      id: 19,
       name: 'Zero-G Chocolate Sphere',
       description: 'Levitating dessert with temperature-reactive cocoa shell and surprise center',
       price: 699,
@@ -77,7 +246,69 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
       prepTime: 8
     },
     {
-      id: 5,
+      id: 20,
+      name: 'Teleporting Tiramisu',
+      description: 'Layers that transport your taste buds to different dimensions',
+      price: 799,
+      category: 'desserts',
+      image: '🍰',
+      rating: 4.8,
+      prepTime: 12
+    },
+    {
+      id: 21,
+      name: 'Quantum Ice Cream',
+      description: 'Superposition flavor - vanilla and chocolate until observed',
+      price: 549,
+      category: 'desserts',
+      image: '🍦',
+      rating: 4.7,
+      prepTime: 5
+    },
+    {
+      id: 22,
+      name: 'Holographic Cheesecake',
+      description: 'Appears differently to each diner based on their favorite memories',
+      price: 849,
+      category: 'desserts',
+      image: '🍰',
+      rating: 4.6,
+      prepTime: 10
+    },
+    {
+      id: 23,
+      name: 'Time-Dilation Donuts',
+      description: 'Each bite extends the sweetness experience by 5 minutes',
+      price: 449,
+      category: 'desserts',
+      image: '🍩',
+      rating: 4.5,
+      prepTime: 7
+    },
+    {
+      id: 24,
+      name: 'Levitating Soufflé',
+      description: 'Anti-gravity soufflé that floats above your plate while you eat',
+      price: 899,
+      category: 'desserts',
+      image: '🧁',
+      rating: 4.9,
+      prepTime: 15
+    },
+    {
+      id: 25,
+      name: 'Digital Macarons',
+      description: 'Color-changing macarons with programmable flavor sequences',
+      price: 649,
+      category: 'desserts',
+      image: '🍪',
+      rating: 4.4,
+      prepTime: 6
+    },
+
+    // Beverages
+    {
+      id: 26,
       name: 'Mood-Sync Mocktail',
       description: 'Color-changing beverage that responds to ambient lighting and music',
       price: 399,
@@ -85,6 +316,76 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
       image: '🍹',
       rating: 4.6,
       prepTime: 5
+    },
+    {
+      id: 27,
+      name: 'Quantum Coffee',
+      description: 'Coffee beans from parallel universes blended to perfection',
+      price: 299,
+      category: 'beverages',
+      image: '☕',
+      rating: 4.8,
+      prepTime: 3
+    },
+    {
+      id: 28,
+      name: 'Holographic Tea',
+      description: 'Traditional tea leaves with AR steam patterns and floating cups',
+      price: 249,
+      category: 'beverages',
+      image: '🍵',
+      rating: 4.5,
+      prepTime: 4
+    },
+    {
+      id: 29,
+      name: 'Levitating Lemonade',
+      description: 'Self-stirring lemonade with gravity-defying ice cubes',
+      price: 349,
+      category: 'beverages',
+      image: '🍋',
+      rating: 4.4,
+      prepTime: 3
+    },
+    {
+      id: 30,
+      name: 'Time-Warped Wine',
+      description: 'Aged through temporal acceleration for centuries of flavor in minutes',
+      price: 1299,
+      category: 'beverages',
+      image: '🍷',
+      rating: 4.9,
+      prepTime: 2
+    },
+    {
+      id: 31,
+      name: 'Neural Smoothie',
+      description: 'Adapts nutrients based on your body\'s real-time health data',
+      price: 449,
+      category: 'beverages',
+      image: '🥤',
+      rating: 4.7,
+      prepTime: 6
+    },
+    {
+      id: 32,
+      name: 'Quantum Bubble Tea',
+      description: 'Pearls exist in superposition until you bite them',
+      price: 399,
+      category: 'beverages',
+      image: '🧋',
+      rating: 4.6,
+      prepTime: 4
+    },
+    {
+      id: 33,
+      name: 'Digital Energy Drink',
+      description: 'Downloads energy directly to your nervous system via nano-particles',
+      price: 549,
+      category: 'beverages',
+      image: '⚡',
+      rating: 4.5,
+      prepTime: 2
     }
   ];
 
