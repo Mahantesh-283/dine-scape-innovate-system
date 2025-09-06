@@ -29,8 +29,43 @@ export const SmartTableHeader: React.FC<SmartTableHeaderProps> = ({
   return (
     <div className="relative overflow-hidden">
       {/* Header Background */}
-      <div className={`bg-gradient-to-r ${getThemeColor(ambientTheme)} p-6 shadow-2xl`}>
-        <div className="flex justify-between items-center">
+      <div className={`bg-gradient-to-r ${getThemeColor(ambientTheme)} p-4 md:p-6 shadow-2xl`}>
+        {/* Mobile Layout */}
+        <div className="md:hidden space-y-3">
+          <div className="flex justify-between items-center">
+            <div className="bg-white/20 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/30">
+              <h1 className="text-xl font-bold text-white">{tableNumber}</h1>
+              <p className="text-white/80 text-xs">Smart Dining</p>
+            </div>
+            <div className="flex items-center space-x-2 bg-black/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/20">
+              <Clock className="w-4 h-4 text-white/80" />
+              <span className="text-white font-medium text-sm">{currentTime}</span>
+            </div>
+          </div>
+          
+          <div className="flex justify-between items-center">
+            <div className="bg-black/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/20">
+              <p className="text-white/90 text-xs">Theme: <span className="font-semibold capitalize">{ambientTheme}</span></p>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 bg-black/20 backdrop-blur-lg rounded-xl px-2 py-1 border border-white/20">
+                <Wifi className="w-3 h-3 text-green-400" />
+                <Signal className="w-3 h-3 text-green-400" />
+                <Battery className="w-3 h-3 text-green-400" />
+              </div>
+              
+              {orderCount > 0 && (
+                <div className="bg-red-500 backdrop-blur-lg rounded-full px-2 py-1 border border-red-400">
+                  <span className="text-white font-bold text-xs">{orderCount}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Layout */}
+        <div className="hidden md:flex justify-between items-center">
           {/* Left Section */}
           <div className="flex items-center space-x-4">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/30">

@@ -396,33 +396,33 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
   return (
     <div className="space-y-6">
       {/* Category Selection */}
-      <div className="flex space-x-4 overflow-x-auto pb-4">
+      <div className="flex space-x-3 overflow-x-auto pb-4 scrollbar-hide">
         {categories.map((category) => (
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 ${
+            className={`flex items-center space-x-2 px-4 md:px-6 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 touch-manipulation ${
               selectedCategory === category.id
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
                 : 'bg-white/10 backdrop-blur-lg text-gray-300 hover:text-white hover:bg-white/20 border border-white/20'
             }`}
           >
-            <span className="text-xl">{category.icon}</span>
-            <span className="font-medium">{category.name}</span>
+            <span className="text-lg md:text-xl">{category.icon}</span>
+            <span className="font-medium text-sm md:text-base">{category.name}</span>
           </button>
         ))}
       </div>
 
       {/* Menu Items Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {filteredItems.map((item) => (
           <div
             key={item.id}
-            className="group bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 hover:bg-white/15 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105"
+            className="group bg-white/10 backdrop-blur-lg rounded-2xl md:rounded-3xl p-4 md:p-6 border border-white/20 hover:bg-white/15 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105 touch-manipulation"
           >
             {/* Item Image & Badge */}
-            <div className="relative mb-4">
-              <div className="text-6xl text-center mb-4 group-hover:scale-110 transition-transform duration-300">
+            <div className="relative mb-3 md:mb-4">
+              <div className="text-4xl md:text-6xl text-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
                 {item.image}
               </div>
               {item.isPopular && (
@@ -434,22 +434,22 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
             </div>
 
             {/* Item Info */}
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+            <div className="space-y-2 md:space-y-3">
+              <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
                 {item.name}
               </h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-gray-300 text-xs md:text-sm leading-relaxed line-clamp-2">
                 {item.description}
               </p>
 
               {/* Rating & Time */}
-              <div className="flex items-center space-x-4 text-sm">
+              <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm">
                 <div className="flex items-center space-x-1 text-yellow-400">
-                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-3 h-3 md:w-4 md:h-4 fill-current" />
                   <span>{item.rating}</span>
                 </div>
                 <div className="flex items-center space-x-1 text-gray-400">
-                  <Clock className="w-4 h-4" />
+                  <Clock className="w-3 h-3 md:w-4 md:h-4" />
                   <span>{item.prepTime} min</span>
                 </div>
                 {item.spiceLevel && (
@@ -457,7 +457,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
                     {[...Array(5)].map((_, i) => (
                       <div
                         key={i}
-                        className={`w-2 h-2 rounded-full ${
+                        className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
                           i < item.spiceLevel ? 'bg-red-500' : 'bg-gray-600'
                         }`}
                       />
@@ -467,16 +467,16 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onAddToOrder }) => {
               </div>
 
               {/* Price & Add Button */}
-              <div className="flex items-center justify-between pt-4 border-t border-white/20">
-                <span className="text-2xl font-bold text-cyan-400">
+              <div className="flex items-center justify-between pt-3 md:pt-4 border-t border-white/20">
+                <span className="text-lg md:text-2xl font-bold text-cyan-400">
                   ₹{item.price}
                 </span>
                 <button
                   onClick={() => onAddToOrder(item)}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-2 rounded-full flex items-center space-x-2 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-4 md:px-6 py-2 rounded-full flex items-center space-x-2 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 touch-manipulation min-h-[44px]"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>Add</span>
+                  <span className="text-sm md:text-base">Add</span>
                 </button>
               </div>
             </div>

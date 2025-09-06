@@ -43,8 +43,8 @@ const Index = () => {
           orderCount={currentOrders.length}
         />
         
-        {/* Navigation */}
-        <div className="flex justify-center py-6">
+        {/* Navigation - Mobile Bottom Nav */}
+        <div className="hidden md:flex justify-center py-6">
           <div className="flex space-x-2 bg-black/30 backdrop-blur-lg rounded-2xl p-2 border border-cyan-500/20">
             {navigationSections.map((section) => {
               const IconComponent = section.icon;
@@ -67,7 +67,7 @@ const Index = () => {
         </div>
 
         {/* Main Content */}
-        <div className="container mx-auto px-6 pb-8">
+        <div className="container mx-auto px-4 md:px-6 pb-20 md:pb-8">
           {activeSection === 'menu' && (
             <MenuSection onAddToOrder={addToOrder} />
           )}
@@ -89,6 +89,31 @@ const Index = () => {
           {activeSection === 'payment' && (
             <PaymentSection orders={currentOrders} />
           )}
+        </div>
+
+        {/* Mobile Bottom Navigation */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-cyan-500/20 z-50">
+          <div className="grid grid-cols-3 gap-1 p-2">
+            {navigationSections.map((section) => {
+              const IconComponent = section.icon;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => setActiveSection(section.id)}
+                  className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-300 ${
+                    activeSection === section.id
+                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <IconComponent className="w-5 h-5 mb-1" />
+                  <span className="text-xs font-medium text-center leading-tight">
+                    {section.label.split(' ')[0]}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
