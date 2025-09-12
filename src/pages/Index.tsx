@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Home, Search, Heart, ShoppingCart, Music } from 'lucide-react';
+import { Home, Search, Heart, ShoppingCart, Music, Lightbulb, GamepadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import MobileHeader from '@/components/MobileHeader';
 import MobileMenu from '@/components/MobileMenu';
 import MobileCart from '@/components/MobileCart';
 import MobileMusicPlayer from '@/components/MobileMusicPlayer';
+import AmbianceControl from '@/components/AmbianceControl';
+import Entertainment from '@/components/Entertainment';
 
 interface CartItem {
   id: number;
@@ -95,6 +97,10 @@ const Index = () => {
         );
       case 'music':
         return <MobileMusicPlayer />;
+      case 'ambiance':
+        return <AmbianceControl />;
+      case 'entertainment':
+        return <Entertainment />;
       case 'favorites':
         return (
           <div className="flex flex-col items-center justify-center h-96 text-center px-6">
@@ -122,8 +128,8 @@ const Index = () => {
         <div className="flex items-center justify-around py-2">
           {[
             { id: 'menu', icon: Home, label: 'Menu' },
-            { id: 'search', icon: Search, label: 'Search' },
-            { id: 'favorites', icon: Heart, label: 'Favorites' },
+            { id: 'ambiance', icon: Lightbulb, label: 'Ambiance' },
+            { id: 'entertainment', icon: GamepadIcon, label: 'Fun' },
             { id: 'cart', icon: ShoppingCart, label: 'Cart' },
             { id: 'music', icon: Music, label: 'Music' },
           ].map((tab) => {
