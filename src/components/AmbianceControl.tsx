@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import { Lightbulb, Thermometer, Volume2, Wind, Palette, Sun, Moon } from 'lucide-react';
+import { Lightbulb, Thermometer, Volume2, Wind, Palette, Sun, Moon, Save, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { useAmbianceSettings } from '@/hooks/useAmbianceSettings';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const AmbianceControl = () => {
   const [lighting, setLighting] = useState(75);
@@ -12,7 +16,10 @@ const AmbianceControl = () => {
   const [musicVolume, setMusicVolume] = useState(60);
   const [ventilation, setVentilation] = useState(50);
   const [selectedMood, setSelectedMood] = useState('cozy');
+  const [presetName, setPresetName] = useState('');
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const { toast } = useToast();
+  const { settings, loading, saveSettings, deleteSettings } = useAmbianceSettings();
 
   const moods = [
     { id: 'romantic', name: 'Romantic', icon: '💕', color: 'from-pink-500 to-rose-500' },
@@ -43,6 +50,42 @@ const AmbianceControl = () => {
       title: "Ambiance Updated",
       description: `Applied ${mood} mood settings`,
     });
+  };
+
+  const applySavedPreset = (preset: any) => {
+    setLighting(preset.lighting_level);
+    setTemperature(preset.temperature);
+    setMusicVolume(preset.music_volume);
+    setVentilation(preset.air_flow);
+    setSelectedMood('custom');
+
+    toast({
+      title: "Preset Applied",
+      description: `Applied ${preset.preset_name} settings`,
+    });
+  };
+
+  const handleSavePreset = async () => {
+    if (!presetName.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a preset name",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    await saveSettings({
+      preset_name: presetName,
+      lighting_level: lighting,
+      temperature: temperature,
+      music_volume: musicVolume,
+      air_flow: ventilation,
+      is_default: false,
+    });
+
+    setPresetName('');
+    setSaveDialogOpen(false);
   };
 
   return (
@@ -186,6 +229,78 @@ const AmbianceControl = () => {
             <span>Still</span>
             <span>Breezy</span>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Saved Presets */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <span>Your Saved Presets</span>
+            <Dialog open={saveDialogOpen} onOpenChange={setSaveDialogOpen}>
+              <DialogTrigger asChild>
+                <Button size="sm">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Preset
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Save Current Settings</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="preset-name">Preset Name</Label>
+                    <Input
+                      id="preset-name"
+                      value={presetName}
+                      onChange={(e) => setPresetName(e.target.value)}
+                      placeholder="Enter preset name"
+                    />
+                  </div>
+                  <Button onClick={handleSavePreset} className="w-full">
+                    Save Preset
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <p className="text-muted-foreground text-center py-4">Loading presets...</p>
+          ) : settings.length === 0 ? (
+            <p className="text-muted-foreground text-center py-4">No saved presets yet</p>
+          ) : (
+            <div className="space-y-2">
+              {settings.map((preset) => (
+                <div key={preset.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                  <div>
+                    <p className="font-medium">{preset.preset_name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      Light: {preset.lighting_level}% • Temp: {preset.temperature}°C • Volume: {preset.music_volume}%
+                    </p>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => applySavedPreset(preset)}
+                    >
+                      Apply
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => deleteSettings(preset.id!)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 

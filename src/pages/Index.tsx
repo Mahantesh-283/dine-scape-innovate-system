@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { Home, Search, Heart, ShoppingCart, Music, Lightbulb, GamepadIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Home, Search, Heart, ShoppingCart, Music, Lightbulb, GamepadIcon, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import MobileHeader from '@/components/MobileHeader';
 import MobileMenu from '@/components/MobileMenu';
 import MobileCart from '@/components/MobileCart';
@@ -31,6 +34,14 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('menu');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const { toast } = useToast();
+  const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
 
   const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -74,12 +85,47 @@ const Index = () => {
     );
   };
 
-  const handleCheckout = () => {
-    toast({
-      title: "Checkout",
-      description: "Redirecting to payment...",
-    });
-    // Here you would integrate with payment processing
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) {
+      toast({
+        title: "Empty Cart",
+        description: "Add some items to your cart first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: {
+          items: cartItems,
+          total: total,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, '_blank');
+        toast({
+          title: "Redirecting to Payment",
+          description: "Opening Stripe checkout in new tab...",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Payment Error",
+        description: error.message || "Failed to process payment",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/auth');
   };
 
   const renderContent = () => {
@@ -109,10 +155,33 @@ const Index = () => {
             <p className="text-muted-foreground">Save your favorite dishes here!</p>
           </div>
         );
+      case 'profile':
+        return (
+          <div className="flex flex-col items-center justify-center h-96 text-center px-6 space-y-4">
+            <User className="h-16 w-16 text-muted-foreground mb-4" />
+            <h3 className="text-lg font-semibold mb-2">Profile</h3>
+            <p className="text-muted-foreground mb-4">Welcome, {user?.email}</p>
+            <Button onClick={handleSignOut} variant="outline" className="flex items-center space-x-2">
+              <LogOut className="h-4 w-4" />
+              <span>Sign Out</span>
+            </Button>
+          </div>
+        );
       default:
         return <MobileMenu onAddToCart={addToCart} />;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -131,7 +200,7 @@ const Index = () => {
             { id: 'ambiance', icon: Lightbulb, label: 'Ambiance' },
             { id: 'entertainment', icon: GamepadIcon, label: 'Fun' },
             { id: 'cart', icon: ShoppingCart, label: 'Cart' },
-            { id: 'music', icon: Music, label: 'Music' },
+            { id: 'profile', icon: User, label: 'Profile' },
           ].map((tab) => {
             const Icon = tab.icon;
             return (
