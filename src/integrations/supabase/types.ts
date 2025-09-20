@@ -14,7 +14,160 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ambiance_settings: {
+        Row: {
+          air_flow: number | null
+          created_at: string
+          id: string
+          is_default: boolean | null
+          lighting_level: number | null
+          music_volume: number | null
+          preset_name: string
+          temperature: number | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          air_flow?: number | null
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          lighting_level?: number | null
+          music_volume?: number | null
+          preset_name: string
+          temperature?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          air_flow?: number | null
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          lighting_level?: number | null
+          music_volume?: number | null
+          preset_name?: string
+          temperature?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ambiance_settings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      entertainment_events: {
+        Row: {
+          created_at: string
+          current_participants: number | null
+          description: string | null
+          end_time: string | null
+          event_type: string
+          id: string
+          max_participants: number | null
+          start_time: string | null
+          status: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_participants?: number | null
+          description?: string | null
+          end_time?: string | null
+          event_type?: string
+          id?: string
+          max_participants?: number | null
+          start_time?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_participants?: number | null
+          description?: string | null
+          end_time?: string | null
+          event_type?: string
+          id?: string
+          max_participants?: number | null
+          start_time?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: string
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id: string
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_activities: {
+        Row: {
+          activity_data: Json | null
+          activity_type: string
+          completed: boolean | null
+          completed_at: string | null
+          created_at: string
+          id: string
+          score: number | null
+          user_id: string | null
+        }
+        Insert: {
+          activity_data?: Json | null
+          activity_type: string
+          completed?: boolean | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          score?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          activity_data?: Json | null
+          activity_type?: string
+          completed?: boolean | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          score?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_activities_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
